@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function Home() {
 
+  //Event on React
+
   const handleClick = (e) => {
     console.log("Hello Ninjas" + e);
   }
