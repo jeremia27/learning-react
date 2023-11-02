@@ -2,26 +2,33 @@ import React, { useState } from 'react'
 
 export default function Home() {
 
+  //NET NINJA
+  
   //Event on React done
   //UseHook done
-  const [name, setName] = useState('mario');
-  const [age, setAge] = useState(25);
+  //Outputting List
+  
 
-  const handleClick = (e) => {
-    setName('luigi');
-    setAge(30);
-  }
+  const [blogs, setBlogs] = useState([
+    { title: "My New Website", body: "lorem ipsum..", author: "mario", id: 1 },
+    { title: "Welcome Party", body: "lorem ipsum..", author: "luigi", id: 2 },
+    { title: "Web dev top", body: "lorem ipsum..", author: "smith", id: 3 }
+  ])
 
-  const handleClickAgain = (name, e) => {
-    console.log("Hello " + name, e.target);
-  };
 
   return (
     <div className='home'>
-      <h2>Homepage</h2>
-      <p>{name} is {age} years old</p>
-      <button onClick={handleClick}>Click me</button>
-      <button onClick={(e) => handleClickAgain('ayang', e)}>Click me again</button>
+      {
+        blogs.map((blog, index) => (
+          <div className='blog-preview' key={blog.id}>
+            <h2>{blog.title}</h2>
+            <p>write by {blog.author}</p>
+
+          </div>
+
+        ))
+      }
+
     </div>
   )
 }
