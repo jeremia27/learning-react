@@ -1,17 +1,24 @@
-import Navbar from './Navbar';
-import Home from './Home';
+// import Navbar from './Navbar';
+// import Home from './Home';
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import FormLogin from "./Login/FormLogin";
+import Landingpage from "./Landingpage/Landingpage";
 
 function App() {
   // const title = "Welcome to the new blog";
   // const likes = 50;
   return (
-    <div className="App">
-      <Navbar />
-      <div className='content'>
-        <Home/>
-      </div>
-      
-    </div>
+
+    <Router>
+      <Routes>
+        
+          <Route path="/" element={<FormLogin />} />
+          <Route path="/Landingpage/Landingpage" element={<Landingpage />} />
+        
+      </Routes>
+    </Router>
+
   );
 }
 

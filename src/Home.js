@@ -1,33 +1,63 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import BlogList from './BlogList'
 
 export default function Home() {
 
   //NET NINJA
-  
+
   //Event on React done
   //UseHook done
   //Outputting List
-  
+  //Fetching Data
+  //Conditional Loading
 
-  const [blogs, setBlogs] = useState([
-    { title: "My New Website", body: "lorem ipsum..", author: "mario", id: 1 },
-    { title: "Welcome Party", body: "lorem ipsum..", author: "luigi", id: 2 },
-    { title: "Web dev top", body: "lorem ipsum..", author: "smith", id: 3 }
-  ])
+
+  const [blogs, setBlogs] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
+
+  // const handleDelete = (id) => {
+  //   const newBlogs = blogs.filter((blog) => blog.id !== id );
+  //   setBlogs(newBlogs);
+  // }
+
+  const [name, setName] = useState('mario');
+
+
+  useEffect(() => {
+    console.log("useEffect run");
+    setTimeout(() => {
+      fetch('http://localhost:8000/blogs')
+        .then(res => {
+          if(!res.ok){
+            throw Error('could not acces the resource')
+          }
+          // console.log(res);
+          return res.json()
+        })
+        .then(data => {
+          setBlogs(data);
+          setIsPending(false);
+          setError(null);
+        })
+        .catch(err => {
+          // console.log(err.message);
+          setError(err.message);
+          setIsPending(false);
+        })
+    }, 1000);
+
+  }, []);
 
 
   return (
     <div className='home'>
-      {
-        blogs.map((blog, index) => (
-          <div className='blog-preview' key={blog.id}>
-            <h2>{blog.title}</h2>
-            <p>write by {blog.author}</p>
-
-          </div>
-
-        ))
-      }
+    {error && <div>{error}</div>}
+      {isPending && <div>Loading...</div>}
+      {blogs && <BlogList blogs={blogs} title="All Blogs!" />}
+      {/* <BlogList blogs={blogs.filter((blog) => blog.author === "mario")} title="Mario Blogs!" /> */}
+      {/* <button onClick={() => setName('luigi')}>change name</button>
+      <p>{name}</p> */}
 
     </div>
   )
